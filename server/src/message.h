@@ -41,17 +41,3 @@ class Message:public IMessage
         string Unparse();
         ~Message();
 };
-class MessageWithQue:public Message
-{
-    protected:
-        AQueue* mes_que;
-        AQueue* TypeParse();
-    public:
-        MessageWithQue(string,AQueue*);
-        MessageWithQue(const MessageWithQue &);
-        IMessage* Copy();
-        void Write();        
-};
-extern AQueue* Send_que;
-extern AQueue* Log_que;
-extern AQueue *Conn_que;

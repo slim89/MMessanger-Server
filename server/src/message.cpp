@@ -1,27 +1,6 @@
 #include "message.h"
 #include "queue.h"
-extern int max_count_prefix;	
-MessageWithQue::MessageWithQue(string buf,AQueue* que):Message(buf)
-{
-    if (que!=NULL)
-    {
-        mes_que=que;
-    }
-    else
-    {
-        mes_que=TypeParse();
-    }
-}
-MessageWithQue::MessageWithQue(const MessageWithQue &obj):Message(obj)
-{
-    mes_que=obj.mes_que;
-}
-
-IMessage* MessageWithQue::Copy()
-{
-    IMessage* newmes=new MessageWithQue(*this);
-    return newmes;
-}
+extern int max_count_prefix;
 Message::Message(string buf)
 {
     unparse_buf=buf;
@@ -127,47 +106,4 @@ Message::~Message()
 {
     delete [] value;
     delete [] prefix;
-}
-
-
-void MessageWithQue::Write()
-{
-    if (mes_que!=NULL)
-    {
-        mes_que->Write(this);
-    }
-}
-
-
-
-AQueue* MessageWithQue::TypeParse()
-{
-    if (unparse_buf.length()<1)
-        return NULL;
-
-    string val="#type/";
-    size_t i=unparse_buf.find(val);
-    size_t startpos=i+ val.length();
-    i=startpos;
-    while (i<unparse_buf.length())
-    {
-        if (unparse_buf[i]=='#')
-            break;
-        i++;
-    }
-    string newstr=unparse_buf.substr(startpos,i-startpos);
-    if (newstr=="send")
-	{
-	    return Send_que;
-	}   
-    if (newstr== "log")
-        {
-            return Log_que;           
-        }
-    if (newstr== "Notify")
-        {
-            return Conn_que;        
-        }
- 
-    return NULL;
 }

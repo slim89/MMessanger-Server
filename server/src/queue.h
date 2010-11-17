@@ -30,6 +30,3 @@ public:
 		void Write(IMessage*);	
 };
 
-extern AQueue* Send_que;
-extern AQueue* Log_que;
-extern AQueue *Conn_que;

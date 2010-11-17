@@ -2,11 +2,12 @@
 #include "message.h"
 #include "activeclients.h"
 #include "allthread.h"
+#include "typemesparser.h"
 #include <string.h>
 #include <stdlib.h>
 
 //--------------------Global var
-string _s="s",_r="r",_m="m",_l="l",_p="p",_o="o";
+string _s="s",_r="r",_m="m",_l="l",_p="p",_o="o",_typeSend="send",_typeLog="log",_typeNotify="notify";
 int size_que=10;
 int size_buf=1024;
 AQueue* Send_que;
@@ -14,6 +15,7 @@ AQueue* Log_que;
 AQueue *Conn_que;
 ActiveClients cl;
 int max_count_prefix=10;
+QueTypeParser* type_parser;
 
 //-----------------------------
 
@@ -63,6 +65,13 @@ int main()
 	Send_que=new AQueue(size_que);
 	Log_que=new AQueue(size_que);
 	Conn_que=new AQueue(size_que);
+
+	type_parser=new QueTypeParser(3);
+	type_parser->AddPair(&_typeSend,Send_que);
+	type_parser->AddPair(&_typeLog,Log_que);
+	type_parser->AddPair(&_typeNotify,Conn_que);
+	
+	
     	int listener;
 	int qwe=0;//-----------------?????????????????????
    	struct sockaddr_in addr;
@@ -231,14 +240,16 @@ int main()
 		
 				else
 				{	
-					MessageWithQue* msg;
+					Message* msg;
 					string buffer=buf;
 					cout<<" length bufer  "<<buffer.length()<<endl;
-					msg=new MessageWithQue(buffer,NULL);
+					msg=new Message(buffer);
 					cout<<buffer<<endl;
 					cout<<"TEST NICK"<<cl.nick[i]<<endl;
 					msg->AddPart(_s,cl.nick[i]);
-					msg->Write();
+					AQueue* tmp=type_parser->TypeParse(buffer);
+					if (tmp!=NULL)
+					tmp->Write(msg);
 					delete msg;					
 	   			}    
             		}//if

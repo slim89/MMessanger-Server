@@ -5,6 +5,7 @@
 using namespace std;
 extern string _s,_l,_r,_m;
 extern ActiveClients cl;
+extern AQueue* Send_que;
 //...........................................поток отсылающий сообщения
 void* Parsing(void *arg)
 {

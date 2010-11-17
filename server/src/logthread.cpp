@@ -3,6 +3,8 @@
 #include "activeclients.h"
 extern ActiveClients cl;
 extern string _s,_l,_p,_o;
+extern AQueue* Log_que;
+extern AQueue* Conn_que;
 void* LogRegistration(void * arg)
 {
 

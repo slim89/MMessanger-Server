@@ -4,6 +4,7 @@
 //программа потока рассылки клиентам появившихся или отключившихся клиентов
 extern ActiveClients cl;
 extern string _s;
+extern AQueue* Conn_que;
 void* Conndiscon(void *arg)
 {
 	IMessage *mes;
