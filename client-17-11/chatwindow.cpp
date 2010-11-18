@@ -5,11 +5,14 @@
 #include <sys/select.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string>
 #include <QMessageBox>
 #include "mainwindow.h"
 #include <QTime>
 #include <QDate>
+#include <iostream>
+#include <QTextCodec>
+using namespace std;
 
 extern QPointer<chatWindow> newWindow[10];
 extern int socketSender;
@@ -58,10 +61,27 @@ void chatWindow::addMessage(QString from, QString msg)
 }
 void chatWindow::sendMessage()
 {
+    QTextCodec::setCodecForCStrings( QTextCodec::codecForName("utf8") );
+
     QString To,Msg;
     To = this->windowTitle();
     Msg = ui->lineEdit_3->text();
-    string message = "#type/send#r/"+ To.toStdString() + "#m/" +  Msg.toStdString();
+
+
+   /* const char* qq=qPrintable(Msg);
+    const char* tt=qPrintable(To);*/
+    QByteArray qBa = Msg.toAscii();
+    char *ch = qBa.data();
+    cout<<ch<<endl;
+    QByteArray qBa1 = To.toAscii();
+    char *ch1 = qBa1.data();
+    cout<<ch<<endl;
+    string sTo=ch1;
+    string sMsg=ch;
+
+    string message = "#type/send#r/"+ sTo + "#m/" +  sMsg;
+    cout<<message<<endl;
+    cout<<message.c_str()<<endl;
     send(socketSender, message.c_str(), 80, 0);
     QTime messageTime;
     this->ui->textBrowser->setTextColor(Qt::black);

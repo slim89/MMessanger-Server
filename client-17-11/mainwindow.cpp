@@ -12,7 +12,7 @@
 #include <arpa/inet.h>
 
 int globalPort = htons(3425);
-int globalIP =0x68000D0A;
+int globalIP =0x0100007F;
 
 int max_count_prefix=10;
 QPointer<chatWindow> newWindow[10] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};

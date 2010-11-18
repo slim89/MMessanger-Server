@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 //#include <QtGui/QApplication>
 #include "message.h"
+#include <QTextCodec>
 extern QPointer<chatWindow> newWindow[10];
 extern QString ourNick;
 extern QString globalbuff [2][50];
@@ -32,7 +33,7 @@ void RecvThread::run()
     int res;
     char from[80];
    // fcntl(socketSender, F_SETFL, O_NONBLOCK);
-
+    QTextCodec::setCodecForCStrings( QTextCodec::codecForName("utf8") );
      while(1)
      {
             fd_set readset;
