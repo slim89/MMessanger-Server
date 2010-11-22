@@ -28,7 +28,8 @@ void* LogRegistration(void * arg)
 			pass=mes->GetPart(_p);
 			tmpnick=mes->GetPart(_s);
 			operation=mes->GetPart(_o);
-			int i,k; 		
+			int i,k; 	
+			int z=0;	//Условие, если файл пуст или не создан	
 			filedata=new char[lenbuf];	
 
 			cout<<"++login.c: Обработанный логин:: "<<login<<endl;
@@ -54,7 +55,7 @@ void* LogRegistration(void * arg)
 				sock=cl.GetSocket(login,NULL);				
 				if(sock!=0){send(tmpsock,"*login is already used",23,NULL);continue;}
 
-				contacts=fopen("./contacts.txt","rt");
+				contacts=fopen("/usr/share/contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 
 				while(!feof(contacts))
@@ -66,6 +67,7 @@ void* LogRegistration(void * arg)
 					string tmp=filedata;
 					cout<<"FILE READ  "<<tmp<<endl;
 					int qq=0;
+					if(tmp[qq]=='\0'){z=1;break;}
 					string flogin,fpass;
 					while (tmp[qq]!='/')
 						{
@@ -118,7 +120,7 @@ void* LogRegistration(void * arg)
 						break;		//завершаем просмотр файла
 					}
 				}//while
-				if(feof(contacts))	//если подобного логина не найдено
+				if(feof(contacts)||(z==1))	//если подобного логина не найдено или файл пуст(отсутствовал)
 				{
 					printf("Error of login!\n");
 					//отправить "данного логина не найдено"!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -126,6 +128,7 @@ void* LogRegistration(void * arg)
 					//close(sock);
 				}
 				fclose(contacts);
+				z=0;				//обнуляем состояние на всякий случай
 			}//if login
 			if(operation=="registration")
 			{
@@ -141,6 +144,7 @@ void* LogRegistration(void * arg)
 
 					string tmp=filedata;
 					int qq=0;
+					if(tmp[qq]=='\0'){z=1;break;}
 					while (tmp[qq]!='/')
 						{
 							flogin+=tmp[qq];
@@ -158,7 +162,7 @@ void* LogRegistration(void * arg)
 						break;
 					}
 				}
-				if(feof(contacts))	//если подобного логина не найдено то сохраним его
+				if(feof(contacts)||(z==1))	//если подобного логина не найдено то сохраним его (если нет файла либо он пуст)
 				{
 					fprintf( contacts, "%s/%s\n",login.c_str(),pass.c_str());
 					printf("good registration\n");
@@ -172,6 +176,7 @@ void* LogRegistration(void * arg)
 					send(tmpsock,"*Login already exist",21,NULL);
 				}
 				fclose(contacts);
+				z=0;
 			}//if reg
 			delete mes;
 			delete index;
