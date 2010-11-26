@@ -1,13 +1,15 @@
-Source: server
-Section: unknown
+Source: kvp-server
+Section: internet
 Priority: extra
 Maintainer: Anton <avm.slim@gmail.com>
 Build-Depends: debhelper (>= 7)
 Standards-Version: 3.8.3
 Homepage: <insert the upstream URL, if relevant>
 
-Package: server
+Package: kvp-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: Server for quick message
+ Server for processing fast communications using a protocol "kvp".
+ 
+ 
