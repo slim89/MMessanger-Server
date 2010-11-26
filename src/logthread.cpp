@@ -135,7 +135,7 @@ void* LogRegistration(void * arg)
 				string flogin;
 				//Регистрация---------------------------------------------------------------
 				printf("2--------------\n");
-				contacts=fopen("./contacts.txt","a+");
+				contacts=fopen("/usr/share/contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 				while(!feof(contacts))
 				{
