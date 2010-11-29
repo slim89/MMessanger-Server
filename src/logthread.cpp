@@ -53,9 +53,9 @@ void* LogRegistration(void * arg)
 				
 				//Логин-------------------------------------------------------------------
 				sock=cl.GetSocket(login,NULL);				
-				if(sock!=0){send(tmpsock,"*login is already used",23,NULL);continue;}
+				if(sock!=0){send(tmpsock,"#s/ser*ver#m/login is already used",35,NULL);continue;}
 
-				contacts=fopen("/usr/share/contacts.txt","a+");
+				contacts=fopen("./contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 
 				while(!feof(contacts))
@@ -94,13 +94,13 @@ void* LogRegistration(void * arg)
 						{
 							printf("Error of password!\n");
 							//отправить "пароль неверен"!!!!!!!!!!!!!!!!!!!!!!!
-							send(tmpsock,"*Error of password!",20,NULL);
+							send(tmpsock,"#s/ser*ver#m/Error of password",31,NULL);
 						}
 						else		//пароль верен
 						{
 							printf("good login/password\n");
 							//отправить "логирование прошло успешно"!!!!!!!!!!!!!!!!!!!!!!!!
-							send(tmpsock,"*good login/password",21,NULL);
+							send(tmpsock,"#s/ser*ver#m/good login-password",33,NULL);
 							
 							//printf("1-%s\n",cl.nick[*index]);						
 							cout<<"*index "<<*index<<endl;	
@@ -124,7 +124,7 @@ void* LogRegistration(void * arg)
 				{
 					printf("Error of login!\n");
 					//отправить "данного логина не найдено"!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					send(tmpsock,"*Error of login!",17,NULL);
+					send(tmpsock,"#s/ser*ver#m/Error of login",28,NULL);
 					//close(sock);
 				}
 				fclose(contacts);
@@ -135,7 +135,7 @@ void* LogRegistration(void * arg)
 				string flogin;
 				//Регистрация---------------------------------------------------------------
 				printf("2--------------\n");
-				contacts=fopen("/usr/share/contacts.txt","a+");
+				contacts=fopen("./contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 				while(!feof(contacts))
 				{
@@ -167,13 +167,13 @@ void* LogRegistration(void * arg)
 					fprintf( contacts, "%s/%s\n",login.c_str(),pass.c_str());
 					printf("good registration\n");
 					//отправить "регистрация прошла успешно"!!!!!!!!!!!!!!!!!!!!!!!!!!
-					send(tmpsock,"*good registration",19,NULL);
+					send(tmpsock,"#s/ser*ver#m/good registration",31,NULL);
 				}
 				else
 				{
 					printf("Login already exist\n");
 					//отправить "придумайте новый логин"!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					send(tmpsock,"*Login already exist",21,NULL);
+					send(tmpsock,"#s/ser*ver#m/Login already exist",33,NULL);
 				}
 				fclose(contacts);
 				z=0;

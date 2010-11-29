@@ -1,0 +1,11 @@
+Package: kvp-server
+Version: 1.1-1
+Architecture: i386
+Maintainer: Anton <avm.slim@gmail.com>
+Installed-Size: 88
+Depends: libc6 (>= 2.4), libgcc1 (>= 1:4.1.1), libstdc++6 (>= 4.1.1)
+Section: internet
+Priority: extra
+Homepage: <insert the upstream URL, if relevant>
+Description: Server for quick message
+ Server for processing fast communications using a protocol "kvp".
