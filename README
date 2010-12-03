@@ -17,9 +17,4 @@ b - create deb package
                 The package will be created in ../[this directory]
  
 4	Instal package
-		sudo apt-get install [path to deb package]
-
-
-UNINSTALL:
-	
-	sudo apt-get remove [name package]
+		sudo dpkg -i [path to deb package]
