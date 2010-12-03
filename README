@@ -2,7 +2,7 @@ INSTALL:
 
 a - use deb package
 	Instal package:
-		sudo apt-get install [path to deb package]
+		sudo dpkg -i [path to deb package]
 
 b - create deb package
 
