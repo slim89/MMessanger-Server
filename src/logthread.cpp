@@ -55,7 +55,7 @@ void* LogRegistration(void * arg)
 				sock=cl.GetSocket(login,NULL);				
 				if(sock!=0){send(tmpsock,"#s/ser*ver#m/login is already used",35,NULL);continue;}
 
-				contacts=fopen("./contacts.txt","a+");
+				contacts=fopen("/usr/share/kvp-server/contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 
 				while(!feof(contacts))
@@ -135,7 +135,7 @@ void* LogRegistration(void * arg)
 				string flogin;
 				//Регистрация---------------------------------------------------------------
 				printf("2--------------\n");
-				contacts=fopen("./contacts.txt","a+");
+				contacts=fopen("/usr/share/kvp-server/contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 				while(!feof(contacts))
 				{
