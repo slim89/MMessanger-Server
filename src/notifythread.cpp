@@ -20,30 +20,30 @@ void* Conndiscon(void *arg)
 			
 			
 			
-			for(int i=0;i<cl.size_socket_array;i++)
+			for(int i=0;i<cl.Size();i++)
 			{	
 				
-				if((cl.socket[i]==-1)||(cl.nick[i]=="")||(cl.nick[i][0]=='#'))//если сокет не пустой
+				if((cl.Socket(i)==-1)||(cl.Nick(i)=="")||(cl.Nick(i)[0]=='#'))//если сокет не пустой
 				{
 					continue;	
 				}
 				
 				cout<<"!!Conndiscon.c  "<<"buf = "<<buf<<"  length  "<<buf.length()<<endl;
-				cout<<"Komu"<<cl.socket[i]<<endl;
-		     		send(cl.socket[i],buf.c_str(),buf.length()+1,NULL);
+				cout<<"Komu"<<cl.Socket(i)<<endl;
+		     		send(cl.Socket(i),buf.c_str(),buf.length()+1,NULL);
 				
 
 			
 			}
 			
-			for(int i=0;i<cl.size_socket_array;i++)
+			for(int i=0;i<cl.Size();i++)
 			{	
 				
-				if((cl.socket[i]==-1)||(cl.nick[i]=="")||(cl.nick[i][0]=='#'))//если сокет не пустой
+				if((cl.Socket(i)==-1)||(cl.Nick(i)=="")||(cl.Nick(i)[0]=='#'))//если сокет не пустой
 				{
 					continue;	
 				}
-				mes->ReplacePart(_s,cl.nick[i]);
+				mes->ReplacePart(_s,cl.Nick(i));
 				buf=mes->Unparse();
 				cout<<"!!Conndiscon.c  "<<"buf12 = "<<buf<<"  length  "<<buf.length()<<endl;
 				cout<<"Komu"<<socket<<endl;

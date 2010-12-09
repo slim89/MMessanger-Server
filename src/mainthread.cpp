@@ -21,12 +21,12 @@ QueTypeParser* type_parser;
 
 int mymax()
 {
-	int max =cl.socket[0];
+	int max =cl.Socket(0);
 	int i;
-	for (i=1; i<cl.realclient;i++)
+	for (i=1; i<cl.RealClient();i++)
 	{
-		if (cl.socket[i]>max)
-			max=cl.socket[i];		
+		if (cl.Socket(i)>max)
+			max=cl.Socket(i);		
 	}		    
 	return max;
 }
@@ -124,9 +124,9 @@ int main()
         	FD_ZERO(&readset);
         	FD_SET(listener, &readset);
 
-		for (int i=0;i<cl.realclient;i++)
+		for (int i=0;i<cl.RealClient();i++)
 		{
-			FD_SET(cl.socket[i], &readset);		
+			FD_SET(cl.Socket(i), &readset);		
 		}
      
        		// Задаём таймаут
@@ -166,25 +166,25 @@ int main()
 
 	
 			cout<<"--------------ДО добавления-----------------\n";
-			for (int qq=0;qq<cl.realclient;qq++)
+			for (int qq=0;qq<cl.RealClient();qq++)
 			{
-				if (cl.nick[qq]=="")
-					cout<<"server.c: sock "<<cl.socket[qq]<<" nick "<<"NULL"<<endl;
+				if (cl.Nick(qq)=="")
+					cout<<"server.c: sock "<<cl.Socket(qq)<<" nick "<<"NULL"<<endl;
 				else
-					cout<<"server.c: sock "<<cl.socket[qq]<<" nick "<<cl.nick[qq]<<endl;
+					cout<<"server.c: sock "<<cl.Socket(qq)<<" nick "<<cl.Nick(qq)<<endl;
 			}
 			cout<<"-----------------------------------------------\n";
 			
 			cl.WriteNew(sock);// проверить return
 
 			cout<<"--------------После добавления-----------------\n";
-			for (int qq=0;qq<cl.realclient;qq++)
+			for (int qq=0;qq<cl.RealClient();qq++)
 			{
 		
-				if (cl.nick[qq]=="")
-					cout<<"server.c: sock "<<cl.socket[qq]<<" nick "<<"NULL"<<endl;
+				if (cl.Nick(qq)=="")
+					cout<<"server.c: sock "<<cl.Socket(qq)<<" nick "<<"NULL"<<endl;
 				else
-					cout<<"server.c: sock "<<cl.socket[qq]<<" nick "<<cl.nick[qq]<<endl;
+					cout<<"server.c: sock "<<cl.Socket(qq)<<" nick "<<cl.Nick(qq)<<endl;
 			}
 			cout<<"-----------------------------------------------\n";
 
@@ -196,42 +196,42 @@ int main()
 		
 
 				
-		for (int i=0;i<cl.realclient;i++)
+		for (int i=0;i<cl.RealClient();i++)
         	{
 		
-           		 if(FD_ISSET(cl.socket[i], &readset))
+           		 if(FD_ISSET(cl.Socket(i), &readset))
             		{
                 		// Поступили данные от клиента, читаем их
-               			bytes_read = recv(cl.socket[i], buf, size_buf, 0);//реально вернет кол-во байт указанных на стoроне клиента!!!!!
-				cout<<"--server.c: socket RECV:  "<<cl.socket[i]<<"  byte RECV:  "<<bytes_read<<endl;
+               			bytes_read = recv(cl.Socket(i), buf, size_buf, 0);//реально вернет кол-во байт указанных на стoроне клиента!!!!!
+				cout<<"--server.c: socket RECV:  "<<cl.Socket(i)<<"  byte RECV:  "<<bytes_read<<endl;
 				buf[bytes_read]='\0';
 				if(bytes_read <= 0)
                 		{
                     			// Соединение разорвано, удаляем сокет из множества
-					close(cl.socket[i]);			
-                  			cl.socket[i]=-1;
+					close(cl.Socket(i));			
+                  			cl.setSocket(i,-1);
 					
 					
 					//рассылка юзерам о дисконнекте пользователя
-					if(cl.nick[i][0]!='#')
+					if(cl.Nick(i)[0]!='#')
 					{	
 						IMessage* connmes=new Message("");
 						connmes->AddPart(_o,"disconnect");
-						connmes->AddPart(_s,cl.nick[i]);
+						connmes->AddPart(_s,cl.Nick(i));
 						Conn_que->Write(connmes);						
 						delete connmes;						
 					}
-					cl.nick[i]="";
+					cl.setNick(i,"");
 
 					//-----------------------------------------
 					cout<<"--------------После закрытия-----------------\n";
-					for (int qq=0;qq<cl.realclient;qq++)
+					for (int qq=0;qq<cl.RealClient();qq++)
 					{
 			
-						if (cl.nick[qq]=="")
-							cout<<"server.c: sock "<<cl.socket[qq]<<" nick "<<"NULL"<<endl;
+						if (cl.Nick(qq)=="")
+							cout<<"server.c: sock "<<cl.Socket(qq)<<" nick "<<"NULL"<<endl;
 						else
-							cout<<"server.c: sock "<<cl.socket[qq]<<" nick "<<cl.nick[qq]<<endl;
+							cout<<"server.c: sock "<<cl.Socket(qq)<<" nick "<<cl.Nick(qq)<<endl;
 					}
 					cout<<"-----------------------------------------------\n";     
 		
@@ -245,8 +245,8 @@ int main()
 					cout<<" length bufer  "<<buffer.length()<<endl;
 					msg=new Message(buffer);
 					cout<<buffer<<endl;
-					cout<<"TEST NICK"<<cl.nick[i]<<endl;
-					msg->AddPart(_s,cl.nick[i]);
+					cout<<"TEST NICK"<<cl.Nick(i)<<endl;
+					msg->AddPart(_s,cl.Nick(i));
 					AQueue* tmp=type_parser->TypeParse(buffer);
 					if (tmp!=NULL)
 					tmp->Write(msg);

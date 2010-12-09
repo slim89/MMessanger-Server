@@ -55,8 +55,8 @@ void* LogRegistration(void * arg)
 				sock=cl.GetSocket(login,NULL);				
 				if(sock!=0){send(tmpsock,"#s/ser*ver#m/login is already used",35,NULL);continue;}
 
-				//contacts=fopen("/usr/share/kvp-server/contacts.txt","a+");
-				contacts=fopen("./contacts.txt","a+");
+				contacts=fopen("/usr/share/kvp-server/contacts.txt","a+");
+				//contacts=fopen("./contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 
 				while(!feof(contacts))
@@ -105,14 +105,14 @@ void* LogRegistration(void * arg)
 							
 							//printf("1-%s\n",cl.nick[*index]);						
 							cout<<"*index "<<*index<<endl;	
-							cl.nick[*index]=login;
+							cl.setNick(*index,login);
 							//printf("3-%s\n",cl.nick[*index]);
 
 
 							//рассылка юзерам о коннекте пользователя
 							IMessage* connmes=new Message("");
 							connmes->AddPart(_o,"connect");
-							connmes->AddPart(_s,cl.nick[*index]);
+							connmes->AddPart(_s,cl.Nick(*index));
 							Conn_que->Write(connmes);						
 							delete connmes;
 							
@@ -136,8 +136,8 @@ void* LogRegistration(void * arg)
 				string flogin;
 				//Регистрация---------------------------------------------------------------
 				printf("2--------------\n");
-				//contacts=fopen("/usr/share/kvp-server/contacts.txt","a+");
-				contacts=fopen("./contacts.txt","a+");
+				contacts=fopen("/usr/share/kvp-server/contacts.txt","a+");
+				//contacts=fopen("./contacts.txt","a+");
 				fseek(contacts, 0, SEEK_SET);
 				while(!feof(contacts))
 				{

@@ -4,8 +4,8 @@ ActiveClients::ActiveClients()
 	int i;
 	for(i=0;i<size_socket_array; i++)
 	{
-		socket[i]=-1;
-		nick[i]="";
+		sockPair[i].socket=-1;
+		sockPair[i].nick="";
 	}
 	realclient=0;
 	tmpnumber=0;
@@ -16,12 +16,12 @@ int ActiveClients::GetSocket(string name, int* index)
 	int i;
 	for(i=0;i<size_socket_array; i++)
 	{
-		if(nick[i]==name)
+		if(sockPair[i].nick==name)
 		{
 			
 			if(index!=NULL)
 				*index=i;
-			return socket[i];
+			return sockPair[i].socket;
 		}
 	}
 	return 0;//возвращем 0 в случае если не нашли нужной пары
@@ -31,9 +31,9 @@ string ActiveClients::GetNick(int s)
 	int i;
 	for(i=0;i<size_socket_array; i++)
 	{
-		if(socket[i]==s)
+		if(sockPair[i].socket==s)
 		{
-			return nick[i];
+			return sockPair[i].nick;
 		}
 	}
 	return "";//возвращем NULL в случае если не нашли нужной пары
@@ -47,7 +47,7 @@ bool ActiveClients::WriteNew(int s)
 	tmpnumber++;
 	for (j=0;j<realclient;j++)
 	{
-		if (socket[j]==-1)	
+		if (sockPair[j].socket==-1)	
 		{
 			flag=1;
 			break;
@@ -61,18 +61,47 @@ bool ActiveClients::WriteNew(int s)
 	
 	if (flag)// добавление вместо ранее отключенного сокета 
 	{
-		nick[j]=str;
-		socket[j]=s;		
+		sockPair[j].nick=str;
+		sockPair[j].socket=s;		
 		
 	}
 
         else 
 	{
 
-		nick[j]=str;
-		socket[realclient]=s;
+		sockPair[realclient].nick=str;
+		sockPair[realclient].socket=s;
 	    	realclient++;
 		
 	}
-	
+}
+
+void ActiveClients::setNick(int i,string str)
+{
+	sockPair[i].nick=str;
+}
+
+void ActiveClients::setSocket(int i,int fd)
+{
+	sockPair[i].socket=fd;
+}
+
+string ActiveClients::Nick(int i)
+{
+	return sockPair[i].nick;
+}
+
+int ActiveClients::Socket(int i)
+{
+	return sockPair[i].socket;
+}
+
+int ActiveClients::Size()
+{
+	return size_socket_array;
+}
+
+int ActiveClients::RealClient()
+{
+	return realclient;
 }

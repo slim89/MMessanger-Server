@@ -3,17 +3,29 @@
 #include <iostream>
 #include <stdio.h>
 using namespace std;
+
+struct SockNick
+{
+	int socket;
+	string nick;
+};
+
 class ActiveClients
 {	
-	
-public: 
-	const static int size_socket_array=50;
+private:	
+	SockNick sockPair[50];
 	int realclient;
 	unsigned int tmpnumber;
-	int socket[50];
-	string nick[50];
+	const static int size_socket_array=50;
+public: 
 	int GetSocket(string, int*);//возвращает сокет по имени
-	string GetNick(int);//возвращает имя посокету	
+	string GetNick(int);//возвращает имя по сокету	
 	bool WriteNew(int);//принимает дескриптор и записывает в свободное место в массиве сокетов
-	ActiveClients();	
+	ActiveClients();
+	void setNick(int,string);
+	void setSocket(int,int);	
+	int Socket(int);
+	string Nick(int); 
+	int Size();
+	int RealClient();
 };
