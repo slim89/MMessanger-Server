@@ -4,20 +4,22 @@ extern int max_count_prefix;
 Message::Message(string buf)
 {
     unparse_buf=buf;
-    prefix=new string[max_count_prefix];
-    value=new string[max_count_prefix];
+    /*prefix=new string[max_count_prefix];
+    value=new string[max_count_prefix];*/
+    pair=new ValPref[max_count_prefix];
     real_size=0;
 }
 Message::Message(const Message &obj)
 {
     unparse_buf=obj.unparse_buf;
     real_size=obj.real_size;
-    prefix=new string[max_count_prefix];
-    value=new string[max_count_prefix];
+    /*prefix=new string[max_count_prefix];
+    value=new string[max_count_prefix];*/
+    pair=new ValPref[max_count_prefix];
     for (int i=0;i<real_size;i++)
     {
-        prefix[i]=obj.prefix[i];
-        value[i]=obj.value[i];
+        pair[i].prefix=obj.pair[i].prefix;
+        pair[i].value=obj.pair[i].value;
     }
 }
 IMessage* Message::Copy()
@@ -32,9 +34,9 @@ void Message::ReplacePart(string _prefix,string _value)
     int flag=0;
     for(int i=0;i<real_size;i++)
     {
-        if (prefix[i]==_prefix)
+        if (pair[i].prefix==_prefix)
         {
-            value[i]=_value;flag=1;
+            pair[i].value=_value;flag=1;
         }
     }
     if (flag==0)
@@ -44,8 +46,8 @@ void Message::ReplacePart(string _prefix,string _value)
 
 void Message::AddPart(string _prefix,string _value)
 {
-    prefix[real_size]=_prefix;
-    value[real_size]=_value;
+    pair[real_size].prefix=_prefix;
+    pair[real_size].value=_value;
     real_size++;
 }
 
@@ -54,9 +56,9 @@ string Message::GetPart(string prefix)
 {
     for (int i=0;i<real_size;i++)
     {
-        if (this->prefix[i]==prefix)
+        if (this->pair[i].prefix==prefix)
         {
-            return this->value[i];
+            return this->pair[i].value;
         }
     }
     return "";
@@ -78,13 +80,13 @@ void Message::Parse()
         }
         while((unparse_buf[i]!='/')&&(unparse_buf[i]!='\0'))
         {
-            prefix[j]=prefix[j]+unparse_buf[i];
+            pair[j].prefix=pair[j].prefix+unparse_buf[i];
             i++;
         }
         i++;
         while((unparse_buf[i]!='#')&&(unparse_buf[i]!='\0'))
         {
-            value[j]=value[j]+unparse_buf[i];
+            pair[j].value=pair[j].value+unparse_buf[i];
             i++;
         }
         j++;
@@ -97,13 +99,14 @@ string Message::Unparse()
 {
     string str;
     for (int i=0;i<real_size;i++)
-        str=str+'#'+prefix[i]+'/'+value[i];
+        str=str+'#'+pair[i].prefix+'/'+pair[i].value;
     return str;
 }
 
 
 Message::~Message()
 {
-    delete [] value;
-    delete [] prefix;
+    /*delete [] value;
+    delete [] prefix;*/
+    delete[] pair;
 }

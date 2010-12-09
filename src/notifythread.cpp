@@ -20,7 +20,7 @@ void* Conndiscon(void *arg)
 			
 			
 			
-			for(int i=0;i<cl.size_socket_mass;i++)
+			for(int i=0;i<cl.size_socket_array;i++)
 			{	
 				
 				if((cl.socket[i]==-1)||(cl.nick[i]=="")||(cl.nick[i][0]=='#'))//если сокет не пустой
@@ -36,7 +36,7 @@ void* Conndiscon(void *arg)
 			
 			}
 			
-			for(int i=0;i<cl.size_socket_mass;i++)
+			for(int i=0;i<cl.size_socket_array;i++)
 			{	
 				
 				if((cl.socket[i]==-1)||(cl.nick[i]=="")||(cl.nick[i][0]=='#'))//если сокет не пустой

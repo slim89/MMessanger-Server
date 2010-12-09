@@ -13,16 +13,15 @@ class IMessage;
 using namespace std;
 class AQueue
 {
-public:
+private:
 		int notEmpty;//количество доступных элементов
 		int iterwrite;
 		int iterread;
 		IMessage **mas;		
 		int count; // длина очереди
 		int maxcount;
-
 		int maxlenmessage;
-
+public:
 		AQueue(int);	
 		AQueue();
 		~AQueue();

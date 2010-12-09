@@ -7,7 +7,7 @@ class ActiveClients
 {	
 	
 public: 
-	const static int size_socket_mass=50;
+	const static int size_socket_array=50;
 	int realclient;
 	unsigned int tmpnumber;
 	int socket[50];

@@ -2,7 +2,7 @@
 ActiveClients::ActiveClients()
 {
 	int i;
-	for(i=0;i<size_socket_mass; i++)
+	for(i=0;i<size_socket_array; i++)
 	{
 		socket[i]=-1;
 		nick[i]="";
@@ -14,7 +14,7 @@ ActiveClients::ActiveClients()
 int ActiveClients::GetSocket(string name, int* index)
 {
 	int i;
-	for(i=0;i<size_socket_mass; i++)
+	for(i=0;i<size_socket_array; i++)
 	{
 		if(nick[i]==name)
 		{
@@ -29,7 +29,7 @@ int ActiveClients::GetSocket(string name, int* index)
 string ActiveClients::GetNick(int s)
 {
 	int i;
-	for(i=0;i<size_socket_mass; i++)
+	for(i=0;i<size_socket_array; i++)
 	{
 		if(socket[i]==s)
 		{

@@ -11,6 +11,12 @@
 #include <iostream>
 using namespace std;
 
+struct ValPref
+{
+	string prefix;
+        string value;
+};
+
 class AQueue;
 class IMessage
 {
@@ -26,8 +32,7 @@ class Message:public IMessage
 {
     protected:
         string unparse_buf;
-        string* prefix;
-        string* value;
+        ValPref *pair;
         int real_size;
     public:
         void ReplacePart(string,string);
